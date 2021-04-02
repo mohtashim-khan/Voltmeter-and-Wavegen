@@ -1,0 +1,21 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+ 
+entity Mux is
+    Port (	AVGIN               	: in  STD_LOGIC_VECTOR (11 downto 0);
+			REGIN					: in  STD_LOGIC_VECTOR (11 downto 0);
+			S                     	: in  STD_LOGIC;
+            MUXOUT					: out STD_LOGIC_VECTOR (11 downto 0);
+          );
+end Mux;
+
+architecture Behavioral of Mux is
+		
+	begin
+		with S select
+			MUXOUT <= AVGIN when '0',
+					  REGIN when '1';
+
+
+end Behavioral;

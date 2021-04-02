@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity FreqorAmpModulation is
+   PORT ( clk    : in  STD_LOGIC; 
+           reset  : in  STD_LOGIC;
+			SelectFreqorAmp : in STD_LOGIC;
+           distance : in  STD_LOGIC_VECTOR (12 downto 0);
+           Freqselectout  : out STD_LOGIC_VECTOR (4 downto 0);
+		   Ampselectout : out STD_LOGIC_VECTOR  (3 downto 0)
+         );
+end FreqandAmpModulation;
+
+architecture Behavioral of FreqandAmpModulation is
+
+signal distance_integer : integer; 
+signal freqout : STD_LOGIC_VECTOR(4 downto 0);
+signal Ampout : STD_LOGIC_VECTOR (3 downto 0);										
+
+begin
+
+distance_integer <= to_integer(unsigned(distance));
+
+freq_process: process(clk, reset, distance)
+begin 
+
+if(distance_integer < 400) then
+	freqselectout => "00000";
+	end if; 					--1khz
+
+if(400 < distance_integer and distance_integer < 581) then
+	freqselectout => "00001";
+	end if;
+
+
+end process;   
+  
+END Behavioral;

@@ -1,0 +1,70 @@
+-- --- Seven segment component
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+package Num_Hex_type is
+type Num_Hex is array(0 to 5) of std_logic_vector (3 downto 0);
+end package Num_Hex_type;
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+package HEX_type is
+type HEX is array(0 to 5) of std_logic_vector (7 downto 0);
+end package Hex_type;
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use work.Num_Hex_type.all;
+use work.HEX_type.all;
+
+entity SevenSegment is
+    Port ( DP_in                                                 : in  STD_LOGIC_VECTOR (5 downto 0);
+           Num_Hex												 : in  Num_Hex;
+           HEX                         							 : out HEX
+          );
+end SevenSegment;
+architecture Behavioral of SevenSegment is
+
+--Note that component declaration comes after architecture and before begin (common source of error).
+   Component SevenSegment_decoder is 
+      port(  H     : out STD_LOGIC_VECTOR (7 downto 0);
+             input : in  STD_LOGIC_VECTOR (3 downto 0);
+             DP    : in  STD_LOGIC                               
+          );                  
+   end  Component;   
+begin
+decoder0: SevenSegment_decoder  port map 
+                                   (H     => Hex(0),
+                                    input => Num_Hex(0),
+                                    DP    => DP_in(0)
+                                    );
+decoder1: SevenSegment_decoder  port map 
+                                   (H     => Hex(1),
+                                    input => Num_Hex(1),
+                                    DP    => DP_in(1)
+                                    );
+decoder2: SevenSegment_decoder  port map 
+                                   (H     => Hex(2),
+                                    input => Num_Hex(2),
+                                    DP    => DP_in(2)
+                                    );
+decoder3: SevenSegment_decoder port map 
+                                   (H     => Hex(3),
+                                    input => Num_Hex(3),
+                                    DP    => DP_in(3)
+                                    );
+decoder4: SevenSegment_decoder  port map 
+                                   (H     => Hex(4),
+                                    input => Num_Hex(4),
+                                    DP    => DP_in(4)
+                                    );
+decoder5: SevenSegment_decoder  port map 
+                                   (H     => Hex(5),
+                                    input => Num_Hex(5),
+                                    DP    => DP_in(5)
+                                    );
+--Note that port mapping begins after begin (common source of error).
+
+                    
+end Behavioral;

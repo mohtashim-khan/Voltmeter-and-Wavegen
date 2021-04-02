@@ -1,0 +1,47 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity wave_gen is
+    Port ( reset : in STD_LOGIC;
+           clk : in STD_LOGIC;
+           clk_1kHz_pulse :  in STD_LOGIC;
+           PWM_OUT : out STD_LOGIC
+          );
+end wave_gen;
+
+architecture Behavioral of wave_gen is
+
+    constant up : STD_LOGIC := '1';
+    constant down : STD_LOGIC := '0'; 
+    constant width : integer:= 9;
+    type StateType is (S0,S1,S2);
+    signal CurrentState,NextState: StateType;
+    signal pwm_out_i, count_direction : STD_LOGIC;
+    signal duty_cycle,counter : STD_LOGIC_VECTOR(width-1 downto 0);
+ 	  constant max_count: std_logic_vector(width-1 downto 0) := (others => '1');
+ --	constant max_count: std_logic_vector(width-1 downto 0) := "011111111"; -- solution to double frequency and half amplitude of triangle wave
+ 	
+    constant zeros_count : std_logic_vector(width-1 downto 0) := (others => '0');   
+ 
+    component Sawtooth is
+	Port   ( reset      : in STD_LOGIC;
+			 clk		: in STD_LOGIC;
+             khz_clk    : in STD_LOGIC;
+             pwm_out    : out STD_LOGIC
+           );
+end Sawtooth;
+    
+begin
+
+sawtooth_gen: sawtooth
+	Port   ( reset => reset,
+			 clk => clk,
+             khz_clk => clk_1kHz_pulse,
+             pwm_out => pwm_out_i
+           );
+        
+    PWM_OUT <= pwm_out_i;
+
+end Behavioral;
+    

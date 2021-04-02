@@ -1,0 +1,24 @@
+entity tb_voltmeter is –- note there are no ports
+
+end tb_voltemeter;
+
+
+architecture tb of tb_voltmeter is
+component main_voltmeter is -- declare the component
+port ( A,B: in std_logic; C,Sum: out std_logic);
+end component;
+-- Inputs
+signal A : std_logic := '0';
+signal B : std_logic := '0';
+-- Outputs
+signal C,Sum : std_logic;
+begin
+UUT: main_HA port map (A=>A,B=>B,C=>C,Sum=>Sum); ‐‐ instantiate adder as UUT
+stim_proc: process
+begin
+A <= '0';
+B <= '0';
+wait for 50 ns; -- keeps A and B being `0` for 50 ns
+.. .. -- see next page .. ..
+end process;
+end tb;

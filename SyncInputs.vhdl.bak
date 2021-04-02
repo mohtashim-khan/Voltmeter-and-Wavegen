@@ -1,0 +1,65 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity SyncInputs is 
+	Port(
+		   MUXSELECTSYNC					 :	in STD_LOGIC;
+		   FrequpSYNC					 	 : in STD_LOGIC;
+		   FreqdownSYNC						 : in STD_LOGIC;
+		   AmpupSYNC					 	 :	in STD_LOGIC;
+		   AmpdownSYNC					 	 :	in STD_LOGIC;
+		   wave_selectSYNC					 : in std_logic_vector (2 downto 0);
+		   Freq_or_ampSYNC					 : in std_logic;
+		   MUXSELECT					 :	out STD_LOGIC;
+		   Frequp					 	 : out STD_LOGIC;
+		   Freqdown						 : out STD_LOGIC;
+		   Ampup					 	 :	out STD_LOGIC;
+		   Ampdown					 	 :	out STD_LOGIC;
+		   wave_select					 : out std_logic_vector (2 downto 0);
+		   Freq_or_amp					 : out std_logic;
+		   );
+End SyncInputs;
+
+architecture Behavioral of SyncInputs is
+
+signal 		   MUXSELECTSYNC1					 :	in STD_LOGIC;
+signal		   FrequpSYNC1					 	 : in STD_LOGIC;
+signal		   FreqdownSYNC1						 : in STD_LOGIC;
+signal		   AmpupSYNC1					 	 :	in STD_LOGIC;
+signal		   AmpdownSYNC1					 	 :	in STD_LOGIC;
+signal		   wave_selectSYNC1					 : in std_logic_vector (2 downto 0);
+signal		   Freq_or_ampSYNC1					 : in std_logic;
+begin
+
+ process (clk, reset)
+   begin
+      if reset = '1' then
+		   MUXSELECT		<= (others=>'0');
+		   Frequp			<= (others=>'0');
+		   Freqdown			<= (others=>'0');
+		   Ampup			<= (others=>'0');
+		   Ampdown			<= (others=>'0');
+		   wave_select		<= (others=>'0');
+		   Freq_or_amp		<= (others=>'0');
+		   
+		elsif (rising_edge(clk)) then
+		   if (enable = '1') then
+           MUXSELECTSYNC1		=> MUXSELECTSYNC;
+		   FrequpSYNC1			=> FrequpSYNC;
+		   FreqdownSYNC1		=>FreqdownSYNC;
+		   AmpupSYNC1			=>  AmpupSYNC;
+		   AmpdownSYNC1			=>	AmpdownSYNC;
+		   wave_selectSYNC1		=> wave_selectSYNC;
+		   Freq_or_ampSYNC1		=> Freq_or_ampSYNC;
+		   MUXSELECT		=> MUXSELECTSYNC1;
+		   Frequp			=> FrequpSYNC1;
+		   Freqdown			=>FreqdownSYNC1;
+		   Ampup			=>  AmpupSYNC1;
+		   Ampdown			=>	AmpdownSYNC1;
+		   wave_select		=> wave_selectSYNC1;
+		   Freq_or_amp		=> Freq_or_ampSYNC1;
+			end if;
+      end if;
+   end process;
+
+end;
